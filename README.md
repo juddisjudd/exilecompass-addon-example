@@ -1,34 +1,46 @@
 # ExileCompass Notes Addon (Example)
 
-This directory contains a TypeScript-first addon example that matches the enforced addon package layout.
+This repository is the reference TypeScript-first addon package for ExileCompass.
 
-Addon identity:
-- ID: dev.local.notes-addon
-- Name: Notes Addon
-- Version: 0.3.0
+## Addon identity
 
-Required structure:
-- plugin.manifest.json
-- README.md
-- src/
-- data/
+- ID: `dev.local.notes-addon`
+- Name: `Notes Addon`
+- Version: `0.3.0`
 
-TypeScript source files:
-- src/main.ts: typed addon module entrypoint (`entry.main`).
-- src/panel.notes.ts: typed panel descriptor (`entry.panel`).
-- src/types.ts: shared addon interfaces.
+## Package layout
 
-Data files:
-- data/notes.default.json: starter notes seed data (`entry.data`).
+Required files and directories:
 
-Tooling files:
-- package.json: minimal scripts/dev dependencies.
-- tsconfig.json: strict type-check config.
+- `plugin.manifest.json`
+- `README.md`
+- `src/`
+- `data/`
 
-Validation:
-- Run `npm install` then `npm run check` (or use your preferred package manager equivalent).
+Main files in this example:
 
-Current local flow in app:
-- Discover reads c:/Repos/poe2/exilecompass-registry/registry.v1.json.
-- The `dev.local.notes-addon` entry maps to this directory's plugin.manifest.json.
-- Install from Discover installs the manifest locally as a temporary dev path until package download + verification is implemented.
+- `src/main.ts` (`entry.main`)
+- `src/panel.notes.ts` (`entry.panel`)
+- `src/types.ts`
+- `data/notes.default.json` (`entry.data`)
+
+## Local validation
+
+1. Install dependencies: `npm install`
+2. Type-check: `npm run check`
+
+## Manifest rules this example follows
+
+- Include a repo/homepage link (`homepage` or `repoUrl`).
+- Keep `entry.main` under `./src/` and use TS/JS extension.
+- If present, keep `entry.panel` under `./src/`.
+- If present, keep `entry.data` under `./data/`.
+
+## Publishing flow for addon authors
+
+1. Host your addon package and manifest in your own repo/releases.
+2. Open a PR in the registry repository (`exilecompass-registry`).
+3. Add or update your addon entry in that repo's `registry.v1.json`.
+4. Run the registry checks (`validate:registry`, `sync:registry`) before submitting.
+
+The ExileCompass app discovers addons from the registry index and then installs from the manifest URL provided there.
