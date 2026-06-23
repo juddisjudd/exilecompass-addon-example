@@ -5,7 +5,7 @@
   "description": "Adds a lightweight notes panel for quick in-run reminders.",
   "author": "Judd",
   "homepage": "https://github.com/juddisjudd/exilecompass-addon-example",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "kind": "addon",
   "entry": {
     "panel": "./dist/panel.js",
@@ -33,7 +33,7 @@
         "id": "notes",
         "title": "Notes",
         "icon": "note",
-        "pinDefault": false
+        "pinDefault": true
       }
     ],
     "settings.sections": [

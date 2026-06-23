@@ -18,21 +18,24 @@ const mount: MountFn = async ({ root, host }) => {
   const saved = await host.storage.get(NOTES_KEY);
 
   root.innerHTML = '';
+  // Fill the host panel: a full-height column whose textarea grows to take all
+  // remaining space.
+  root.style.cssText = 'display:flex;flex-direction:column;height:100%;box-sizing:border-box;';
 
   const help = document.createElement('p');
   help.textContent = 'Quick scratchpad for map goals, gear reminders, and crafting to-dos.';
-  help.style.cssText = 'margin:0 0 8px;color:#b8b4ae;';
+  help.style.cssText = 'margin:0 0 8px;color:#b8b4ae;flex:0 0 auto;';
 
   const textarea = document.createElement('textarea');
   textarea.value = saved ?? seedText;
   textarea.spellcheck = false;
   textarea.style.cssText =
-    'width:100%;box-sizing:border-box;min-height:160px;resize:vertical;padding:8px;' +
+    'flex:1 1 auto;width:100%;box-sizing:border-box;min-height:120px;resize:none;padding:8px;' +
     'background:#121214;color:#e8e4de;border:1px solid rgba(184,180,174,0.34);' +
     'font:11px/1.4 "JetBrains Mono","Cascadia Code",Consolas,monospace;';
 
   const bar = document.createElement('div');
-  bar.style.cssText = 'display:flex;gap:6px;align-items:center;margin-top:8px;';
+  bar.style.cssText = 'display:flex;gap:6px;align-items:center;margin-top:8px;flex:0 0 auto;';
 
   const save = document.createElement('button');
   save.type = 'button';
