@@ -4,7 +4,7 @@ This repository is the reference TypeScript-first addon package for ExileCompass
 
 ## Addon identity
 
-- ID: `dev.local.notes-addon`
+- ID: `dev.juddisjudd.notes-addon`
 - Name: `Notes Addon`
 - Version: `0.3.0`
 
@@ -38,9 +38,14 @@ Main files in this example:
 
 ## Publishing flow for addon authors
 
-1. Host your addon package and manifest in your own repo/releases.
-2. Open a PR in the registry repository (`exilecompass-registry`).
-3. Add or update your addon entry in that repo's `registry.v1.json`.
+1. Bump the version in `plugin.manifest.json` and `package.json` (they must match).
+2. Tag the release `vX.Y.Z` and push the tag. The `Release Addon` workflow
+   type-checks, verifies the tag matches the manifest version, and publishes a
+   GitHub Release.
+3. Open a PR in the registry repository (`exilecompass-registry`) setting your
+   addon's `latestVersion` to `X.Y.Z` and `repoUrl` to your GitHub repo.
 4. Run the registry checks (`validate:registry`, `sync:registry`) before submitting.
 
-The ExileCompass app discovers addons from the registry index and then installs from the manifest URL provided there.
+ExileCompass discovers addons from the registry index, then installs by
+downloading the GitHub source archive for `repoUrl` at tag `vX.Y.Z`
+(derived from `latestVersion`) — so the tag must exist as a release.

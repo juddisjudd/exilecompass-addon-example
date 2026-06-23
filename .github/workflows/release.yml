@@ -1,0 +1,52 @@
+name: Release Addon
+
+# Tagging `vX.Y.Z` publishes a GitHub Release. ExileCompass installs the addon
+# from the source archive GitHub generates for that tag
+# (…/archive/refs/tags/vX.Y.Z.zip), so creating the release/tag is all that's
+# required — no built artifact needs to be uploaded.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type check
+        run: npm run check
+
+      - name: Verify versions match the tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          MANIFEST=$(jq -r '.version' plugin.manifest.json)
+          PKG=$(jq -r '.version' package.json)
+          echo "tag=$TAG  manifest=$MANIFEST  package=$PKG"
+          if [ "$TAG" != "$MANIFEST" ] || [ "$TAG" != "$PKG" ]; then
+            echo "::error::Tag $TAG must match plugin.manifest.json ($MANIFEST) and package.json ($PKG)"
+            exit 1
+          fi
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --notes "Automated release for $GITHUB_REF_NAME. Install via the ExileCompass addon registry." \
+            --verify-tag
