@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "id": "dev.local.notes-addon",
+  "name": "Notes Addon",
+  "description": "Adds a lightweight notes panel for quick in-run reminders.",
+  "author": "ExileCompass Local Dev",
+  "homepage": "https://github.com/juddisjudd/exilecompass-addon-example",
+  "version": "0.3.0",
+  "kind": "addon",
+  "entry": {
+    "main": "./src/main.ts",
+    "panel": "./src/panel.notes.ts",
+    "data": "./data/notes.default.json"
+  },
+  "compatibility": {
+    "app": ">=0.1.0",
+    "pluginApi": "^1.0.0"
+  },
+  "permissions": [
+    "storage.read",
+    "storage.write",
+    "ui.panel"
+  ],
+  "contributions": {
+    "data.providers": [
+      {
+        "type": "notes.seed",
+        "source": "./notes.default.json",
+        "label": "Default notes"
+      }
+    ],
+    "view.panels": [
+      {
+        "id": "notes",
+        "title": "Notes",
+        "icon": "note",
+        "pinDefault": false
+      }
+    ],
+    "settings.sections": [
+      {
+        "id": "notes",
+        "title": "Notes Addon",
+        "order": 50
+      }
+    ],
+    "actions.commands": [
+      {
+        "id": "notes-open",
+        "title": "Open Notes",
+        "description": "Focuses the notes panel."
+      },
+      {
+        "id": "notes-clear-completed",
+        "title": "Clear Completed Notes",
+        "description": "Removes completed notes from the list."
+      }
+    ]
+  }
+}

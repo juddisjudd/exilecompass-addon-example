@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "notes": [
+    {
+      "id": "acts-farm-runes",
+      "text": "Farm runes before entering Act 3 boss sequence.",
+      "pinned": true,
+      "completed": false
+    },
+    {
+      "id": "craft-boots-ms",
+      "text": "Craft movement speed on boots after next currency spike.",
+      "pinned": false,
+      "completed": false
+    },
+    {
+      "id": "res-cap-check",
+      "text": "Re-check resist caps after upgrading weapon set.",
+      "pinned": false,
+      "completed": true
+    }
+  ]
+}
