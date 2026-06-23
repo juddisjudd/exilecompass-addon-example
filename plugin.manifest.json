@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "id": "dev.local.notes-addon",
+  "id": "dev.juddisjudd.notes-addon",
   "name": "Notes Addon",
   "description": "Adds a lightweight notes panel for quick in-run reminders.",
-  "author": "ExileCompass Local Dev",
+  "author": "Judd",
   "homepage": "https://github.com/juddisjudd/exilecompass-addon-example",
   "version": "0.3.0",
   "kind": "addon",
