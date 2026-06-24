@@ -22,6 +22,27 @@ const mount: MountFn = async ({ root, host }) => {
   // remaining space.
   root.style.cssText = 'display:flex;flex-direction:column;height:100%;box-sizing:border-box;';
 
+  // A small readout of the player's imported build, kept live via builds.onChange.
+  // Needs the `builds.read` permission (declared in plugin.manifest.json).
+  const buildLine = document.createElement('p');
+  buildLine.style.cssText =
+    'margin:0 0 8px;flex:0 0 auto;font-size:11px;color:#f2dea0;' +
+    'border:1px solid rgba(242,222,160,0.25);padding:5px 7px;';
+
+  const renderBuild = (build: Awaited<ReturnType<typeof host.builds.getActive>>) => {
+    if (!build) {
+      buildLine.textContent = 'No build imported yet.';
+      return;
+    }
+    const skills = build.skillSets[build.activeSkillSet];
+    const main = skills?.skillGroups[0]?.mainSkill ?? '—';
+    const cls = build.ascendClassName || build.className;
+    buildLine.textContent = `${cls} · Lv ${build.level} · ${main}`;
+  };
+
+  renderBuild(await host.builds.getActive());
+  host.builds.onChange(renderBuild);
+
   const help = document.createElement('p');
   help.textContent = 'Quick scratchpad for map goals, gear reminders, and crafting to-dos.';
   help.style.cssText = 'margin:0 0 8px;color:#b8b4ae;flex:0 0 auto;';
@@ -54,7 +75,7 @@ const mount: MountFn = async ({ root, host }) => {
   });
 
   bar.append(save, status);
-  root.append(help, textarea, bar);
+  root.append(buildLine, help, textarea, bar);
 };
 
 export default mount;
